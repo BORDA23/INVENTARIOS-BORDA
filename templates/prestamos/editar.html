@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}Editar Préstamo - Sistema de Inventario{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header bg-warning text-dark">
+                    <h4><i class="bi bi-pencil"></i> Editar Préstamo</h4>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{{ url_for('editar_prestamo', id=prestamo.id) }}">
+                        <div class="mb-3">
+                            <label for="id_equipo" class="form-label">Equipo</label>
+                            <select class="form-select" id="id_equipo" name="id_equipo" required>
+                                {% for equipo in equipos %}
+                                <option value="{{ equipo.id }}" {% if equipo.id == prestamo.id_equipo %}selected{% endif %}>
+                                    {{ equipo.nombre }} - {{ equipo.estado }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="id_usuario" class="form-label">Usuario</label>
+                            <select class="form-select" id="id_usuario" name="id_usuario" required>
+                                {% for usuario in usuarios %}
+                                <option value="{{ usuario.id }}" {% if usuario.id == prestamo.id_usuario %}selected{% endif %}>
+                                    {{ usuario.nombre }} - {{ usuario.cargo }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="fecha_prestamo" class="form-label">Fecha de Préstamo</label>
+                            <input type="date" class="form-control" id="fecha_prestamo" name="fecha_prestamo" 
+                                   value="{{ prestamo.fecha_prestamo }}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="fecha_devolucion" class="form-label">Fecha de Devolución</label>
+                            <input type="date" class="form-control" id="fecha_devolucion" name="fecha_devolucion" 
+                                   value="{{ prestamo.fecha_devolucion or '' }}">
+                            <small class="form-text text-muted">Dejar vacío si aún no se ha devuelto</small>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="{{ url_for('prestamos') }}" class="btn btn-secondary">
+                                <i class="bi bi-x-circle"></i> Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-warning">
+                                <i class="bi bi-save"></i> Actualizar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

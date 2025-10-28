@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Editar Equipo - Sistema de Inventario{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header bg-warning text-dark">
+                    <h4><i class="bi bi-pencil"></i> Editar Equipo</h4>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{{ url_for('editar_equipo', id=equipo.id) }}">
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label">Nombre del Equipo</label>
+                            <input type="text" class="form-control" id="nombre" name="nombre" 
+                                   value="{{ equipo.nombre }}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="estado" class="form-label">Estado</label>
+                            <select class="form-select" id="estado" name="estado" required>
+                                <option value="Disponible" {% if equipo.estado == 'Disponible' %}selected{% endif %}>Disponible</option>
+                                <option value="Prestado" {% if equipo.estado == 'Prestado' %}selected{% endif %}>Prestado</option>
+                                <option value="En Mantenimiento" {% if equipo.estado == 'En Mantenimiento' %}selected{% endif %}>En Mantenimiento</option>
+                                <option value="Dañado" {% if equipo.estado == 'Dañado' %}selected{% endif %}>Dañado</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="ubicacion" class="form-label">Ubicación</label>
+                            <input type="text" class="form-control" id="ubicacion" name="ubicacion" 
+                                   value="{{ equipo.ubicacion }}" required>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="{{ url_for('equipos') }}" class="btn btn-secondary">
+                                <i class="bi bi-x-circle"></i> Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-warning">
+                                <i class="bi bi-save"></i> Actualizar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
